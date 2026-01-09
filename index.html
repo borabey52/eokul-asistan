@@ -3,252 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>e-Okul Adım Adım Asistan</title>
+    <title>e-Okul Hızlı Doldurma Asistanı</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #2c3e50; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; }
-        .card { background: white; color:#333; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); max-width: 500px; text-align: center; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 500px; text-align: center; }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
+        p { color: #7f8c8d; line-height: 1.6; }
         .bookmark-btn {
             display: inline-block;
-            background: #2980b9; /* Mavi: Adım Adım Mod */
+            background: #27ae60; /* Yeşil yaptık ki güncellendiği belli olsun */
             color: white;
             text-decoration: none;
             padding: 15px 30px;
             border-radius: 50px;
             font-weight: bold;
             font-size: 18px;
-            border: 2px dashed #3498db;
+            border: 2px dashed #2ecc71;
             cursor: grab;
             margin: 30px 0;
-            box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
             transition: transform 0.2s;
         }
         .bookmark-btn:hover { transform: scale(1.05); }
+        .instruction { background: #e8f6f3; padding: 15px; border-radius: 8px; border-left: 5px solid #2ecc71; text-align: left; margin-top: 20px; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h1>👣 Adım Adım Asistan</h1>
-        <p>Otomatik döngü yok. Siz "Onayla" diyene kadar beklemede kalır.</p>
+        <h1>🚀 e-Okul Asistanı v2</h1>
+        <p>MEB engeline takılmayan yeni sürüm.</p>
 
-        <a class="bookmark-btn" href="javascript:(function(){
-            var kumanda=window.open('','GeminiAdimAdim','width=360,height=650,top=50,left=50');
-            if(!kumanda){alert('Lütfen POP-UP izni verin!');return}
-
-            var html=`
-            <html><head><style>
-                body{font-family:'Segoe UI',sans-serif;padding:15px;background:#f0f2f5;color:#333}
-                textarea{width:100%;height:80px;font-size:11px;border:1px solid #ccc;border-radius:5px;padding:5px}
-                button{width:100%;padding:12px;margin:5px 0;cursor:pointer;font-weight:bold;color:white;border:none;border-radius:6px;font-size:14px;transition:0.2s}
-                button:active{transform:scale(0.98)}
-                .btn-load{background:#34495e} 
-                .btn-next{background:#27ae60;height:60px;font-size:16px;box-shadow:0 4px 0 #219150}
-                .btn-skip{background:#f39c12}
-                #info{background:white;padding:10px;border-radius:5px;margin:10px 0;border-left:5px solid #2980b9;font-size:13px}
-                .badge{display:inline-block;padding:3px 6px;border-radius:4px;color:white;font-size:10px;font-weight:bold}
-                .b-iyi{background:#27ae60} .b-orta{background:#3498db} .b-zayif{background:#e74c3c}
-            </style></head><body>
-                <h3 style='margin-top:0;text-align:center'>👣 Adım Adım Kontrol</h3>
-                
-                <div id='setupArea'>
-                    <textarea id='data' placeholder='Excelden Yapıştır:\nAd Soyad   Durum'></textarea>
-                    <button onclick='listeyiYukle()' class='btn-load'>📥 Listeyi Yükle ve Başla</button>
-                </div>
-
-                <div id='runArea' style='display:none'>
-                    <div id='info'>Sıradaki Bekleniyor...</div>
-                    
-                    <button onclick='siradakiIslem()' class='btn-next' id='btnNext'>
-                        ▶️ UYGULA VE KAYDET
-                    </button>
-                    
-                    <button onclick='atla()' class='btn-skip'>⏭️ Bu Öğrenciyi Atla</button>
-                    
-                    <div style='margin-top:15px;font-size:11px;color:#7f8c8d;text-align:center'>
-                        Öğrenci Sayacı: <span id='counter'>0</span> / <span id='total'>0</span>
-                    </div>
-                </div>
-
-            </body>
-            <script>
-                var liste = [];
-                var sira = 0;
-                var anaPencere = window.opener;
-
-                function guncelleInfo(){
-                    if(sira >= liste.length){
-                        document.getElementById('info').innerHTML = '<b>🎉 LİSTE TAMAMLANDI!</b>';
-                        document.getElementById('btnNext').disabled = true;
-                        document.getElementById('btnNext').style.background = '#ccc';
-                        document.getElementById('btnNext').innerText = 'Bitti';
-                        return;
-                    }
-                    var ogr = liste[sira];
-                    var renk = 'b-orta';
-                    if(ogr.durum.includes('iyi')) renk='b-iyi';
-                    if(ogr.durum.includes('zayif')) renk='b-zayif';
-                    
-                    document.getElementById('info').innerHTML = 
-                        'Sıradaki: <b>' + ogr.ad + '</b><br>' +
-                        'Durum: <span class=\"badge '+renk+'\">' + ogr.durum.toUpperCase() + '</span>';
-                    
-                    document.getElementById('counter').innerText = (sira + 1);
-                }
-
-                function listeyiYukle(){
-                    var raw = document.getElementById('data').value.trim();
-                    if(!raw){ alert('Lütfen listeyi yapıştırın.'); return; }
-                    
-                    liste = [];
-                    var lines = raw.split('\\n');
-                    lines.forEach(function(line){
-                        var parts = line.split('\\t');
-                        if(parts.length<2) parts=line.split(' ');
-                        if(parts.length>=2){
-                            var durum = parts.pop().trim().toLowerCase();
-                            var ad = parts.join(' ').trim();
-                            if(ad.length>2) liste.push({ad:ad, durum:durum});
-                        }
-                    });
-
-                    document.getElementById('total').innerText = liste.length;
-                    document.getElementById('setupArea').style.display = 'none';
-                    document.getElementById('runArea').style.display = 'block';
-                    sira = 0;
-                    guncelleInfo();
-                }
-
-                function atla(){
-                    sira++;
-                    guncelleInfo();
-                }
-
-                function siradakiIslem(){
-                    if(sira >= liste.length) return;
-                    var ogrenci = liste[sira];
-                    var btn = document.getElementById('btnNext');
-                    
-                    btn.innerText = '⏳ İşleniyor...';
-                    btn.style.background = '#95a5a6';
-
-                    try {
-                        /* 1. Öğrenciyi Bul ve Seç */
-                        var bulundu = false;
-                        var allLinks = anaPencere.document.links;
-                        
-                        // Linklerde ara
-                        for(var i=0; i<allLinks.length; i++){
-                            if(allLinks[i].innerText.includes(ogrenci.ad)){
-                                allLinks[i].click();
-                                bulundu = true;
-                                break;
-                            }
-                        }
-                        
-                        // Bulamazsa div/span/td içinde ara (Yedek)
-                        if(!bulundu){
-                             var allDivs = anaPencere.document.querySelectorAll('td, div, span');
-                             for(var i=0; i<allDivs.length; i++){
-                                if(allDivs[i].innerText.trim() == ogrenci.ad){
-                                    allDivs[i].click();
-                                    bulundu = true; 
-                                    break;
-                                }
-                            }
-                        }
-
-                        if(!bulundu){
-                            alert('⚠️ Öğrenci sayfada bulunamadı: ' + ogrenci.ad + '\\nLütfen doğru sınıfta olduğunuzdan emin olun.');
-                            btn.innerText = '▶️ Tekrar Dene';
-                            btn.style.background = '#c0392b';
-                            return;
-                        }
-
-                        /* 2. Kısa bekleme ve Doldurma */
-                        setTimeout(function(){
-                            doldurVeKaydet(ogrenci.durum);
-                        }, 2000); // 2 saniye bekle (Sayfa yüklenmesi için)
-
-                    } catch(e) {
-                        alert('Bağlantı koptu. Lütfen e-Okul sayfasını yenileyip butona tekrar basın.');
-                        btn.innerText = '▶️ UYGULA VE KAYDET';
-                        btn.style.background = '#27ae60';
-                    }
-                }
-
-                function doldurVeKaydet(durum){
-                    try {
-                        var tip = 'orta';
-                        if(durum.includes('iyi') || durum.includes('pekiyi')) tip = 'iyi';
-                        else if(durum.includes('zayıf')) tip = 'zayıf';
-
-                        var gruplar = {};
-                        var inputs = anaPencere.document.querySelectorAll('input[type=radio]');
-                        
-                        if(inputs.length === 0){
-                             alert('Sayfada doldurulacak form bulunamadı! Öğrenci seçimi tam yüklenmemiş olabilir. Tekrar deneyin.');
-                             document.getElementById('btnNext').innerText = '▶️ UYGULA VE KAYDET';
-                             document.getElementById('btnNext').style.background = '#27ae60';
-                             return;
-                        }
-
-                        inputs.forEach(function(r){
-                            if(r.name){
-                                if(!gruplar[r.name]) gruplar[r.name] = [];
-                                gruplar[r.name].push(r);
-                            }
-                        });
-
-                        for(var n in gruplar){
-                            var val = '2';
-                            var rnd = Math.random();
-                            if(tip === 'iyi') val = rnd < 0.7 ? '4' : '3';
-                            else if(tip === 'zayıf') val = rnd < 0.6 ? '1' : '2';
-                            else val = rnd < 0.2 ? '1' : (rnd < 0.8 ? '2' : '3');
-
-                            gruplar[n].forEach(function(r){
-                                if(r.value == val) r.click();
-                            });
-                        }
-
-                        // KAYDETME İŞLEMİ
-                        var btnKaydet = anaPencere.document.querySelector('.btn-success') || 
-                                        anaPencere.document.querySelector('a[onclick*=\\'Kaydet\\']') ||
-                                        anaPencere.document.querySelector('input[value=\\'Kaydet\\']');
-                        
-                        if(btnKaydet){
-                            btnKaydet.click();
-                            
-                            // Başarılı oldu, sırayı artır
-                            sira++;
-                            guncelleInfo();
-                            
-                            // Butonu eski haline getir
-                            document.getElementById('btnNext').innerText = '▶️ UYGULA VE KAYDET';
-                            document.getElementById('btnNext').style.background = '#27ae60';
-                            
-                        } else {
-                            alert('Kaydet butonu bulunamadı!');
-                        }
-
-                    } catch(e){
-                        alert('Hata: ' + e);
-                    }
-                }
-            <\/script></html>
-            `;
-            kumanda.document.write(html);
-        })();">
-            👣 Adım Adım (Sürükle)
+        <a class="bookmark-btn" href="javascript:(function(){try{if(document.getElementById('gemini-panel-v2')){return}var d=document.createElement('div');d.id='gemini-panel-v2';d.style.cssText='position:fixed;top:120px;right:20px;width:240px;background:#fff;border:2px solid #2c3e50;border-radius:8px;z-index:99999;padding:15px;box-shadow:0 5px 20px rgba(0,0,0,0.3);font-family:sans-serif;';d.innerHTML='<div style=\'display:flex;justify-content:space-between;margin-bottom:10px;\'><b style=\'color:#2c3e50\'>MEB Asistanı</b><span onclick=\'this.parentNode.parentNode.remove()\' style=\'cursor:pointer;font-weight:bold;color:red\'>X Kapat</span></div><button onclick=\'window.gD(&quot;4&quot;)\' style=\'width:100%;margin:5px 0;padding:10px;background:#27ae60;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold\'>Hepsini Çok İyi (4)</button><button onclick=\'window.gD(&quot;3&quot;)\' style=\'width:100%;margin:5px 0;padding:10px;background:#2980b9;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold\'>Hepsini İyi (3)</button><button onclick=\'window.gD(&quot;karisik&quot;)\' style=\'width:100%;margin:5px 0;padding:10px;background:#8e44ad;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold\'>✨ Dengeli Dağıt</button><br><label style=\'font-size:12px;display:block;margin-top:10px;cursor:pointer\'><input type=\'checkbox\' id=\'gAutoSave\'> İşlem bitince kaydet</label>';document.body.appendChild(d);window.gD=function(s){var gr={};document.querySelectorAll('input[type=\'radio\']').forEach(function(r){if(r.name){if(!gr[r.name])gr[r.name]=[];gr[r.name].push(r)}});for(var n in gr){var v=s;if(s==='karisik'){var rn=Math.random();v=rn<0.15?'2':(rn<0.6?'3':'4')}gr[n].forEach(function(r){if(r.value==v)r.click()})}if(document.getElementById('gAutoSave').checked){var b=document.querySelector('a[onclick*=\'Kaydet\']')||document.querySelector('.btn-success')||document.querySelector('input[value=\'Kaydet\']');if(b){setTimeout(function(){b.click()},500)}else{alert('Kaydet butonu bulunamadı, lütfen elle kaydedin.')}}};}catch(e){alert('Hata: '+e)}})();">
+            Asistanı Sürükle (v2)
         </a>
 
-        <p style="font-size: 13px; color: #ccc; margin-top:20px;">
-            <b>Nasıl Çalışır?</b><br>
-            1. <b>Mavi butonu</b> yer imlerine sürükleyin.<br>
-            2. e-Okul'a girip butona basın (Pop-up izni verin).<br>
-            3. Excel listenizi yapıştırın.<br>
-            4. <b>"UYGULA VE KAYDET"</b> butonuna her bastığınızda sıradaki öğrenciyi halleder.
-        </p>
+        <div class="instruction">
+            <strong>Nasıl Paylaşılır?</strong><br>
+            Arkadaşına sadece bu sayfanın linkini atman yeterli. O da bu butonu yukarı sürükleyecek.
+        </div>
     </div>
 
 </body>
