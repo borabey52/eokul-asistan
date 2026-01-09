@@ -11,17 +11,17 @@
         p { color: #7f8c8d; line-height: 1.6; }
         .bookmark-btn {
             display: inline-block;
-            background: #3498db;
+            background: #27ae60; /* Yeşil yaptık ki güncellendiği belli olsun */
             color: white;
             text-decoration: none;
             padding: 15px 30px;
             border-radius: 50px;
             font-weight: bold;
             font-size: 18px;
-            border: 2px dashed #2980b9;
+            border: 2px dashed #2ecc71;
             cursor: grab;
             margin: 30px 0;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
             transition: transform 0.2s;
         }
         .bookmark-btn:hover { transform: scale(1.05); }
@@ -31,19 +31,17 @@
 <body>
 
     <div class="card">
-        <h1>🚀 e-Okul Asistanı</h1>
-        <p>Gelişim raporlarını tek tıkla doldurmak için hazırladığımız ücretsiz araç.</p>
+        <h1>🚀 e-Okul Asistanı v2</h1>
+        <p>MEB engeline takılmayan yeni sürüm.</p>
 
-        <a class="bookmark-btn" href="javascript:(function(){var s=document.createElement('script');s.src='https://borabey52.github.io/eokul-asistan/script.js?v='+Date.now();document.body.appendChild(s);})();">
-            e-Okul Asistanı (Sürükle Beni)
+        <a class="bookmark-btn" href="javascript:(function(){try{if(document.getElementById('gemini-panel-v2')){return}var d=document.createElement('div');d.id='gemini-panel-v2';d.style.cssText='position:fixed;top:120px;right:20px;width:240px;background:#fff;border:2px solid #2c3e50;border-radius:8px;z-index:99999;padding:15px;box-shadow:0 5px 20px rgba(0,0,0,0.3);font-family:sans-serif;';d.innerHTML='<div style=\'display:flex;justify-content:space-between;margin-bottom:10px;\'><b style=\'color:#2c3e50\'>MEB Asistanı</b><span onclick=\'this.parentNode.parentNode.remove()\' style=\'cursor:pointer;font-weight:bold;color:red\'>X Kapat</span></div><button onclick=\'window.gD(&quot;4&quot;)\' style=\'width:100%;margin:5px 0;padding:10px;background:#27ae60;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold\'>Hepsini Çok İyi (4)</button><button onclick=\'window.gD(&quot;3&quot;)\' style=\'width:100%;margin:5px 0;padding:10px;background:#2980b9;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold\'>Hepsini İyi (3)</button><button onclick=\'window.gD(&quot;karisik&quot;)\' style=\'width:100%;margin:5px 0;padding:10px;background:#8e44ad;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold\'>✨ Dengeli Dağıt</button><br><label style=\'font-size:12px;display:block;margin-top:10px;cursor:pointer\'><input type=\'checkbox\' id=\'gAutoSave\'> İşlem bitince kaydet</label>';document.body.appendChild(d);window.gD=function(s){var gr={};document.querySelectorAll('input[type=\'radio\']').forEach(function(r){if(r.name){if(!gr[r.name])gr[r.name]=[];gr[r.name].push(r)}});for(var n in gr){var v=s;if(s==='karisik'){var rn=Math.random();v=rn<0.15?'2':(rn<0.6?'3':'4')}gr[n].forEach(function(r){if(r.value==v)r.click()})}if(document.getElementById('gAutoSave').checked){var b=document.querySelector('a[onclick*=\'Kaydet\']')||document.querySelector('.btn-success')||document.querySelector('input[value=\'Kaydet\']');if(b){setTimeout(function(){b.click()},500)}else{alert('Kaydet butonu bulunamadı, lütfen elle kaydedin.')}}};}catch(e){alert('Hata: '+e)}})();">
+            Asistanı Sürükle (v2)
         </a>
 
         <div class="instruction">
-            <strong>Nasıl Kurulur?</strong><br>
-            Yukarıdaki mavi butonu farenizle tutup tarayıcınızın <b>Yer İmleri (Sık Kullanılanlar)</b> çubuğuna sürükleyip bırakın.
+            <strong>Nasıl Paylaşılır?</strong><br>
+            Arkadaşına sadece bu sayfanın linkini atman yeterli. O da bu butonu yukarı sürükleyecek.
         </div>
-        
-        <p style="font-size: 12px; margin-top: 20px;">Kurulum bitti! Şimdi e-Okul'a girip yer imi çubuğundaki butona tıklayabilirsiniz.</p>
     </div>
 
 </body>
