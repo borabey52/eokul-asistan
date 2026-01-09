@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Okul Hızlı Doldurma Asistanı</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 500px; text-align: center; }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
+        p { color: #7f8c8d; line-height: 1.6; }
+        .bookmark-btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 18px;
+            border: 2px dashed #2980b9;
+            cursor: grab;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            transition: transform 0.2s;
+        }
+        .bookmark-btn:hover { transform: scale(1.05); }
+        .instruction { background: #e8f6f3; padding: 15px; border-radius: 8px; border-left: 5px solid #2ecc71; text-align: left; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>🚀 e-Okul Asistanı</h1>
+        <p>Gelişim raporlarını tek tıkla doldurmak için hazırladığımız ücretsiz araç.</p>
+
+        <a class="bookmark-btn" href="javascript:(function(){var s=document.createElement('script');s.src='https://borabey52.github.io/eokul-asistan/script.js?v='+Date.now();document.body.appendChild(s);})();">
+            e-Okul Asistanı (Sürükle Beni)
+        </a>
+
+        <div class="instruction">
+            <strong>Nasıl Kurulur?</strong><br>
+            Yukarıdaki mavi butonu farenizle tutup tarayıcınızın <b>Yer İmleri (Sık Kullanılanlar)</b> çubuğuna sürükleyip bırakın.
+        </div>
+        
+        <p style="font-size: 12px; margin-top: 20px;">Kurulum bitti! Şimdi e-Okul'a girip yer imi çubuğundaki butona tıklayabilirsiniz.</p>
+    </div>
+
+</body>
+</html>
